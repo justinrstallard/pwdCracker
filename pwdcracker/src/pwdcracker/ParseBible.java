@@ -48,12 +48,11 @@ public class ParseBible {
     
     public void hashBible(){
         Iterator i = bibleTS.iterator();
+        String s ;
         
         while(i.hasNext()) {
-            bibleHash.add(bytesToString(getHash(i.next().toString())));
-            for (int j = 0; j < bibleHash.size(); j++) {
-                bibleHM.put(bibleHash.indexOf(j), i);
-            }
+            s = i.next().toString();
+            bibleHM.put(bytesToString(getHash(s)), s);
         }
     }
     
