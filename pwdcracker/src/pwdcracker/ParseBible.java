@@ -22,16 +22,19 @@ import java.util.TreeSet;
  */
 public class ParseBible {
     
-    TreeSet bibleTS = new TreeSet(); 
-    ArrayList<String> bibleHash = new ArrayList<>(); 
-    HashMap bibleHM = new HashMap();
+    String filename = ""; 
     
-    ParseBible(){
+    private TreeSet bibleTS = new TreeSet(); 
+    private ArrayList<String> bibleHash = new ArrayList<>(); 
+    private HashMap bibleHM = new HashMap();
+    
+    ParseBible(String fn){
+        filename = fn; 
     }
     
     public TreeSet parseBible(){        
         try {
-            File file = new File("Bible.txt"); 
+            File file = new File(filename); 
             Scanner sc = new Scanner(file).useDelimiter("[.,:;()?!\"\\s]+");
             String currWord;
             while(sc.hasNext()){
@@ -41,7 +44,6 @@ public class ParseBible {
             return bibleTS;
         }
         catch (FileNotFoundException e1){
-            
         }
         return null; 
     }
