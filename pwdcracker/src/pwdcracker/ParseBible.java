@@ -7,9 +7,11 @@ package pwdcracker;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
@@ -21,7 +23,8 @@ import java.util.TreeSet;
 public class ParseBible {
     
     TreeSet bibleTS = new TreeSet(); 
-    ArrayList<byte[]> bibleHash = new ArrayList<byte[]>(); 
+    ArrayList<String> bibleHash = new ArrayList<>(); 
+    HashMap bibleHM = new HashMap();
     
     ParseBible(){
     }
@@ -47,14 +50,17 @@ public class ParseBible {
         Iterator i = bibleTS.iterator();
         
         while(i.hasNext()) {
-            bibleHash.add(getHash(i.next().toString()));
+            
+            bibleHash.add(printBytes(getHash(i.next().toString())));
+            for (int j = 0; j < bibleHash.size(); j++) {
+                bibleHM.put(bibleHash.indexOf(j), i);
+            }
+            
         }
-        
-        printBytes(bibleHash.get(0));
     }
     
-    private static void printBytes(byte[] barr){
-        
+    private static String printBytes(byte[] barr){
+        return new BigInteger(1, barr).toString(16);
     }
     
     private static byte[] getHash(String str) {
