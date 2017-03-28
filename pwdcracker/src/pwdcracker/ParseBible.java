@@ -55,7 +55,7 @@ public class ParseBible {
         
         while(i.hasNext()) {
             s = i.next().toString();
-            bibleHM.put(bytesToString(getHash(s)), s);
+            bibleHM.put(getHash(s), s);
         }
     }
     
