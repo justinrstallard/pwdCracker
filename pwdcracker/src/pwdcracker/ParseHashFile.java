@@ -11,9 +11,16 @@ import java.util.ArrayList;
  */
 public class ParseHashFile {
     
-    public static void parseHashFile() throws FileNotFoundException{
-        ArrayList<User> users = new ArrayList<>();
-        Scanner sc = new Scanner(new File("pa3hashes.txt")).useDelimiter(":|\\r\n");
+    String filename = "";
+    ArrayList<User> users = new ArrayList<>();
+    
+    ParseHashFile(String fn){
+        filename = fn;
+    }
+    
+    public void parseHashFile() throws FileNotFoundException{
+        
+        Scanner sc = new Scanner(new File(filename)).useDelimiter(":|\\r\n");
         
         while(sc.hasNext()){
             String user = sc.next();
