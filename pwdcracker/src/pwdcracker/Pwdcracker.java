@@ -1,6 +1,7 @@
 package pwdcracker;
 
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 
 /**
  *
@@ -25,6 +26,14 @@ public class Pwdcracker {
         pHS.parseHashFile();
         
         //Compare hashfile with hashed bible
-        
+        Iterator bibleIterator = pB.bibleHM.entrySet().iterator();
+        while(bibleIterator.hasNext()){
+            for (int j = 0; j < pHS.users.size(); j++) {
+                if(bibleIterator.next(). == )
+                if(pHS.usersWOSalt.contains(bibleIterator.next())){
+                    System.out.println(pHS.usersWOSalt.)
+                }
+            }
+        }
     }
 }

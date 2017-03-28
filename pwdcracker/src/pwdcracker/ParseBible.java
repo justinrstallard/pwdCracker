@@ -25,7 +25,7 @@ public class ParseBible {
     String filename = ""; 
     
     private TreeSet bibleTS = new TreeSet(); 
-    private HashMap bibleHM = new HashMap();
+    HashMap bibleHM = new HashMap();
     
     ParseBible(String fn){
         filename = fn; 
