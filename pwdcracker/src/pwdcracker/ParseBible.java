@@ -50,16 +50,14 @@ public class ParseBible {
         Iterator i = bibleTS.iterator();
         
         while(i.hasNext()) {
-            
-            bibleHash.add(printBytes(getHash(i.next().toString())));
+            bibleHash.add(bytesToString(getHash(i.next().toString())));
             for (int j = 0; j < bibleHash.size(); j++) {
                 bibleHM.put(bibleHash.indexOf(j), i);
             }
-            
         }
     }
     
-    private static String printBytes(byte[] barr){
+    private static String bytesToString(byte[] barr){
         return new BigInteger(1, barr).toString(16);
     }
     
