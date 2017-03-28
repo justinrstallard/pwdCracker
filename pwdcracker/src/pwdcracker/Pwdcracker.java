@@ -13,11 +13,18 @@ public class Pwdcracker {
      */
     public static void main(String[] args) throws FileNotFoundException {
         
+        //Parse bible
         ParseBible pB = new ParseBible("Bible.txt");
         
         pB.parseBible(); 
         pB.hashBible(); 
         
-        ParseHashFile.parseHashFile();
+        //Parse given hash file
+        ParseHashFile pHS = new ParseHashFile("pa3hashes.txt");
+        
+        pHS.parseHashFile();
+        
+        //Compare hashfile with hashed bible
+        
     }
 }
