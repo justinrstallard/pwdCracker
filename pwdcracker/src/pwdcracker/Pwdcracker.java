@@ -17,23 +17,23 @@ public class Pwdcracker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println(getHash("HI").toString()); 
+        
+        parseBible.parseBible(); 
+        
+    }
+    
+    private static byte[] getHash(String str) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            
             // run an update 
-            md.update("HI".getBytes());
+            md.update(str.getBytes());
             // get byte data 
-            byte[] mdbytes = md.digest(); 
-            
-            System.out.println(md.toString());
-            System.out.println(mdbytes.toString());
-            
-            
+            return md.digest(); 
         }
         catch (NoSuchAlgorithmException e1) {
-            
         }
-
+        return null; 
     }
     
 }

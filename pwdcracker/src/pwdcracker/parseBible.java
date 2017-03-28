@@ -5,6 +5,8 @@
  */
 package pwdcracker;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -13,14 +15,21 @@ import java.util.TreeSet;
  * @author justinrstallard
  */
 public class parseBible {
-    public TreeSet parseBible(){        
-        TreeSet bibleTS = new TreeSet();
-        Scanner sc = new Scanner("Bible.txt");
-        String currWord;
-        while(sc.hasNext()){
-            currWord = sc.next();
-            bibleTS.add(currWord);
+    public static TreeSet parseBible(){        
+        try {
+            TreeSet bibleTS = new TreeSet();
+            File file = new File("Bible.txt"); 
+            Scanner sc = new Scanner(file).useDelimiter("[.,:;()?!\"\\s]+");
+            String currWord;
+            while(sc.hasNext()){
+                currWord = sc.next();
+                bibleTS.add(currWord);
+            }
+            return bibleTS;
         }
-        return bibleTS;
+        catch (FileNotFoundException e1){
+            
+        }
+        return null; 
     }
 }
