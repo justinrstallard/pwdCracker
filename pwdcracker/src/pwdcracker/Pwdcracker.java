@@ -18,7 +18,7 @@ public class Pwdcracker {
      */
     public static void main(String[] args) {
         
-        ParseBible pB = new ParseBible();
+        ParseBible pB = new ParseBible("Bible.txt");
         
         pB.parseBible(); 
         pB.hashBible(); 
