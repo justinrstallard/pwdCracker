@@ -10,9 +10,9 @@ package pwdcracker;
  * @author justinrstallard
  */
 public class User {    
-    private String userName;
-    private String hash;
-    private String salt;
+    String userName;
+    String hash;
+    String salt;
     
     User(String uN, String h, String s){
         userName = uN;

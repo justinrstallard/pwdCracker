@@ -29,12 +29,12 @@ public class ParseHashFile {
             String salt = sc.next();
             String hash = sc.next();
             if(salt == ""){
-                usersWOSalt.add(new User(user, salt, hash));
+                usersWOSalt.add(new User(user, hash, salt));
             }
             else{
-                usersWSalt.add(new User(user, salt, hash));    
+                usersWSalt.add(new User(user, hash, salt));    
             }
-            users.add(new User(user, salt, hash));    
+            users.add(new User(user, hash, salt));    
         }
     }
 }
