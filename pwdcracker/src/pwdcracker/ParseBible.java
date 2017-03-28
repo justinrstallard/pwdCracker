@@ -25,7 +25,6 @@ public class ParseBible {
     String filename = ""; 
     
     private TreeSet bibleTS = new TreeSet(); 
-    private ArrayList<String> bibleHash = new ArrayList<>(); 
     private HashMap bibleHM = new HashMap();
     
     ParseBible(String fn){
@@ -39,7 +38,9 @@ public class ParseBible {
             String currWord;
             while(sc.hasNext()){
                 currWord = sc.next();
-                bibleTS.add(currWord);
+                bibleTS.add(currWord.toLowerCase());
+                bibleTS.add(currWord.toLowerCase() + "1");
+                bibleTS.add(currWord.toLowerCase() + "123");
             }
             return bibleTS;
         }
