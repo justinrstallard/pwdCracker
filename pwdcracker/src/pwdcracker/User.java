@@ -10,13 +10,23 @@ package pwdcracker;
  * @author justinrstallard
  */
 public class User {    
-    String userName;
-    String hash;
-    String salt;
+    private final String userName;
+    private final String hash;
+    private final String salt;
     
     User(String uN, String h, String s){
         userName = uN;
         hash = h;
         salt = s;
+    }
+    
+    public String getSalt(User u){
+        return u.salt;
+    }
+    public String getUserName(User u){
+        return u.userName;
+    }
+    public String getHash(User u){
+        return u.hash;
     }
 }

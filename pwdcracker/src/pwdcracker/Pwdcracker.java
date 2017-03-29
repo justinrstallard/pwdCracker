@@ -1,6 +1,7 @@
 package pwdcracker;
 
 import java.io.FileNotFoundException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -11,33 +12,39 @@ public class Pwdcracker {
     /**
      * @param args the command line arguments
      * @throws java.io.FileNotFoundException
+     * @throws java.security.NoSuchAlgorithmException
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, NoSuchAlgorithmException {
         long startTime = System.nanoTime();
         
-        //Parse bible
-        ParseBible pB = new ParseBible("Bible.txt");
-        
-        pB.parseBible(); 
-        pB.hashBible(); 
-        
         //Parse given hash file
-        ParseHashFile pHS = new ParseHashFile("pa3hashes.txt");
-        
+        ParseHashFile pHS = new ParseHashFile("pa3hashes.txt");        
         pHS.parseHashFile();
         
-        //Compare hashfile with hashed bible and output
-            for (int j = 0; j < pHS.users.size(); j++) {
-                if(pB.bibleHM.containsKey(pHS.users.get(j).hash)) {
-                    long currTime = System.nanoTime();
-                    long elapsed = currTime - startTime;
-                    long seconds = elapsed / 1000000000;
-                    long ms = (elapsed-seconds*1000000000)/1000000;
-                    System.out.print("Username: " + pHS.users.get(j).userName);
-                    System.out.print(" Password: " + pB.bibleHM.get(pHS.users.get(j).hash) + " ");
-                    System.out.println(seconds + "s "+ ms + "ms ");
-                }
+        //Parse bible
+        ParseBible pB = new ParseBible("Bible.txt");        
+        pB.parseBible();    
+        
+        //add salt to passwords
+        for (int i = 0; i < pHS.users.size(); i++) {
+            if(pHS.users.get(i).getSalt(pHS.users.get(i)).length() >= 1){
+                pB.addSaltToPasswords(pHS.users.get(i).getSalt(pHS.users.get(i)));
             }
+        }
+           
+        pB.hashBible();   
+        //Compare hashfile with hashed bible and output
+        for (int j = 0; j < pHS.users.size(); j++) {
+            if(pB.bibleHM.containsKey(pHS.users.get(j).getHash(pHS.users.get(j)))) {
+                long currTime = System.nanoTime();
+                long elapsed = currTime - startTime;
+                long seconds = elapsed / 1000000000;
+                long ms = (elapsed-seconds*1000000000)/1000000;
+                System.out.print(pHS.users.get(j).getUserName(pHS.users.get(j)) + " \t");
+                System.out.print(pB.bibleHM.get(pHS.users.get(j).getHash(pHS.users.get(j))) + " \t");
+                System.out.println(seconds + "s "+ ms + "ms ");
+            }
+        }
     }
     
 }
