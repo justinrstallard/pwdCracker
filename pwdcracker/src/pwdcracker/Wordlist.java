@@ -17,7 +17,10 @@ import java.util.TreeSet;
 public class Wordlist {
     private String filename = ""; 
     
-    private final TreeSet wordlistTS = new TreeSet(); 
+    private final TreeSet wordlistTS = new TreeSet();
+    private TreeSet wordlistTSSalted = new TreeSet();
+    private TreeSet wordlistTSAppend = new TreeSet();
+    
     HashMap wordlistHM = new HashMap();
     
     Wordlist(String fn){
@@ -35,6 +38,12 @@ public class Wordlist {
                 wordlistTS.add(currWord.toLowerCase());
                 wordlistTS.add(currWord.toLowerCase() + "1234");
                 wordlistTS.add(currWord.replace('s', '$').toLowerCase());
+                wordlistTS.add(currWord.replace('S', '$'));
+                wordlistTS.add(currWord.replace('r', '4').toLowerCase());
+                wordlistTS.add(currWord.replace('R', '4'));
+                wordlistTS.add(currWord.replace('o', '0').toLowerCase());
+                wordlistTS.add(currWord.replace('O', '0'));
+                
             }
             
             return wordlistTS;
@@ -60,10 +69,44 @@ public class Wordlist {
         }
     }
     
+    public void hashSaltedWordlist() throws NoSuchAlgorithmException{
+        Iterator i = wordlistTSSalted.iterator();
+        String s ;
+        
+        while(i.hasNext()) {
+            s = i.next().toString();
+            
+            //MD5 hash function
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(s.getBytes());            
+            byte[] barr = md.digest();
+            
+            //turn byte into hash string
+            String anotherString = new BigInteger(1, barr).toString(16);
+            
+            //store in hash map
+            wordlistHM.put(anotherString, s);
+        }
+    }
+    
     public void addSaltToWordlist(String salt){
-        Object[] wlArray = wordlistTS.toArray();
-        for (Object bibleArray1 : wlArray) {
-            wordlistTS.add(bibleArray1.toString() + salt);
+        Iterator i = wordlistTS.iterator(); 
+        while(i.hasNext()){
+            wordlistTSSalted.add((String)i.next()+salt); 
+        }
+    }
+    
+    public void appendPasswordWith(String app, String app2){
+        Iterator i = wordlistTS.iterator(); 
+        String pwd = ""; 
+        
+        while(i.hasNext()){
+            pwd = (String)i.next(); 
+            wordlistTSSalted.add(pwd+app); 
+            
+            if(app2!=""){
+              wordlistTSSalted.add(pwd+app+app2); 
+            }
         }
     }
 }
