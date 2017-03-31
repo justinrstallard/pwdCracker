@@ -5,6 +5,8 @@
  */
 package pwdcracker;
 
+import java.util.HashMap;
+
 /**
  *
  * @author justinrstallard
@@ -13,7 +15,10 @@ public class User {
     private final String userName;
     private final String hash;
     private final String salt;
-    private String password; 
+    private String password;
+    
+    // stores all found Users:  (userName, User Object)
+    private static HashMap found = new HashMap(); 
     
     User(String uN, String h, String s){
         userName = uN;
@@ -32,13 +37,23 @@ public class User {
     }
     
     public void print(long startTime, String pwd){
-        password = pwd; 
-        long currTime = System.nanoTime();
-        long elapsed = currTime - startTime;
-        long seconds = elapsed / 1000000000;
-        long ms = (elapsed-seconds*1000000000)/1000000;
-        System.out.print(userName + " \t");
-        System.out.print(pwd + " \t");
-        System.out.println(seconds + "s "+ ms + "ms ");
+        // check if this user is already found 
+        if(!found.containsKey(userName)){
+            // save the password for this user 
+            password = pwd; 
+            
+            // add user to found HashMap
+            found.put(userName, this);
+            
+            // print results 
+            long currTime = System.nanoTime();
+            long elapsed = currTime - startTime;
+            long seconds = elapsed / 1000000000;
+            long ms = (elapsed-seconds*1000000000)/1000000;
+            System.out.print(userName + " \t");
+            System.out.print(pwd + " \t");
+            System.out.println(seconds + "s "+ ms + "ms ");
+            
+        }
     }
 }
