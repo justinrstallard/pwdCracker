@@ -23,8 +23,11 @@ public class PwdChanger {
     
     public void runTests(){
         toLowerCase();
-        toUpperCase(); 
+        toUpperCase();
         appendPrependZeroToNine(); 
+        appendPrependZeroToNineLowerAndUpperCase();
+        
+        System.out.println("End of Tests.");
     }
     
     private void add(String s){

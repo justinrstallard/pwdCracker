@@ -35,6 +35,7 @@ public class PwdTesterThread implements Runnable {
         String hash = ""; 
         Hasher hMachine = new Hasher(); 
         int index = 0;
+        boolean statusPrinted = false; 
         
         User testUsr = new User("", "", ""); 
 
@@ -57,6 +58,13 @@ public class PwdTesterThread implements Runnable {
                 // if passed, print User 
                 if(testUsr!=null){
                     testUsr.print(startTime, password); 
+                    statusPrinted = false; 
+                }
+            }
+            else{
+                if(!statusPrinted){
+                    System.out.println("Queue Empty."); 
+                    statusPrinted = true; 
                 }
             }
             /*if(index%1000==0){
