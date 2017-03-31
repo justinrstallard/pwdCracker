@@ -1,0 +1,44 @@
+currWord = sc.next();
+                wordlistTS.add(currWord);
+                wordlistTS.add(currWord.toLowerCase());
+                wordlistTS.add(currWord.toLowerCase() + "1234");
+                //wordlistTS.add(currWord + "1234");
+                //wordlistTS.add(currWord.toLowerCase() + "2015");
+                //wordlistTS.add(currWord + "2015");
+                //wordlistTS.add(currWord.toLowerCase() + "2014");
+                //wordlistTS.add(currWord + "2014");
+                //wordlistTS.add("1234" + currWord.toLowerCase());
+                //wordlistTS.add("1234" + currWord);
+                wordlistTS.add(currWord.replace('s', '$'));
+                //wordlistTS.add(currWord.replace('r', '4').toLowerCase());
+                //wordlistTS.add(currWord.replace('R', '4'));
+                //wordlistTS.add(currWord.replace('o', '0').toLowerCase());
+                //wordlistTS.add(currWord.replace('O', '0'));
+                wordlistTS.add(currWord.replace('a', '@'));
+                //wordlistTS.add(currWord.replace('l', '1').toLowerCase());
+                //wordlistTS.add(currWord.replace('L', '1'));
+                //wordlistTS.add(currWord.replace('1', '!').toLowerCase());
+                //wordlistTS.add(currWord.replace('1', '!'));
+                //wordlistTS.add(currWord.replace('e', '3').toLowerCase());
+                //wordlistTS.add(currWord.replace('E', '3'));
+                //wordlistTS.add("@" + currWord.toLowerCase());
+                //wordlistTS.add("@" + currWord);
+                wordlistTS.add(currWord.toLowerCase() + "1");
+                //wordlistTS.add(currWord.toLowerCase() + "4u");
+                //wordlistTS.add(currWord.toLowerCase() + "abc");
+                //wordlistTS.add(currWord.toLowerCase() + "!");
+                //wordlistTS.add(currWord + "1");
+                //wordlistTS.add(currWord + "4u");
+                //wordlistTS.add(currWord + "abc");
+                //wordlistTS.add("1" + currWord);
+                //wordlistTS.add("4" + currWord);
+                //wordlistTS.add("abc" + currWord);
+                //wordlistTS.add("for" + currWord);
+                wordlistTS.add(currWord + "!");
+                if((char)(currWord.charAt(0)) > 96){
+                    wordlistTS.add((char)(currWord.charAt(0)-32)+currWord.substring(1,currWord.length()));
+                }
+                else{
+                    wordlistTS.add((char)(currWord.charAt(0)+32)+currWord.substring(1,currWord.length()));
+                }
+                wordlistTS.add(currWord.toUpperCase()+"1");
