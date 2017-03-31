@@ -67,7 +67,7 @@ public class PwdChanger {
         
         for(int i = 0; i<ints.length(); i++){
             Iterator it = getIterator(); 
-            String str = ""; 
+            String str = "";  
             String pend = ints.substring(0, i); 
             
             while(it.hasNext()){
