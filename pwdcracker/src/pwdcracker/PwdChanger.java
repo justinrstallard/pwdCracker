@@ -5,17 +5,45 @@
  */
 package pwdcracker;
 
+import java.util.Iterator;
+
 /**
  *
  * @author jlarson
  */
 public class PwdChanger {
     
+    
     PwdChanger(){
-        
+        Iterator i = Wordlist.wordlistTS.iterator();
+        while(i.hasNext()){
+            add((String)i.next()); 
+        }
+    }
+    
+    public void add(String s){
+        PwdTesterThread.pwds.add(s); 
     }
     
     public void runTests(){
-        PwdTesterThread.pwds.add("hi");
+        appendZeroToNine(); 
+    }
+    
+    
+    
+    
+    /////// ALL THE TESTS //////////
+    private void appendZeroToNine(){
+        String intAppend = "1234567890"; 
+        
+        
+    }
+    
+    private void append(String ap1, String ap2){
+        
+    }
+    
+    private void prepend(String pre){
+        
     }
 }

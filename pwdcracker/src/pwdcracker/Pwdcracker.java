@@ -14,6 +14,7 @@ public class Pwdcracker {
      * @throws java.io.FileNotFoundException
      * @throws java.security.NoSuchAlgorithmException
      */
+    
     public static void main(String[] args) throws FileNotFoundException, NoSuchAlgorithmException {
         //Parse given hash file
         HashFile hashFile = new HashFile("pa3hashes.txt");        
@@ -26,7 +27,6 @@ public class Pwdcracker {
         // start Thread
         PwdTesterThread testerThread = new PwdTesterThread("Tester1", hashFile); 
         testerThread.start(); 
-        testerThread.run();
         
         // start guessing passwords 
         PwdChanger changer = new PwdChanger(); 

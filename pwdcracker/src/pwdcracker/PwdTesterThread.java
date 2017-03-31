@@ -6,6 +6,7 @@
 package pwdcracker;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +20,7 @@ public class PwdTesterThread implements Runnable {
     private String threadName; 
     private HashFile hashFile; 
     
-    public static Queue<String> pwds; 
+    public static Queue<String> pwds = new ArrayDeque<String>();
     
     PwdTesterThread(String name, HashFile hf){
         threadName = name; 
@@ -33,10 +34,12 @@ public class PwdTesterThread implements Runnable {
         String password = ""; 
         String hash = ""; 
         Hasher hMachine = new Hasher(); 
+        int index = 0;
         
         User testUsr = new User("", "", ""); 
 
         while(true){
+            // index++; 
             if(!pwds.isEmpty()){
                 // pop 
                 password = pwds.remove(); 
@@ -56,7 +59,9 @@ public class PwdTesterThread implements Runnable {
                     testUsr.print(startTime, password); 
                 }
             }
-            
+            /*if(index%1000==0){
+                System.out.println(index); 
+            }*/
         }
     }
     

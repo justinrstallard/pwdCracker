@@ -10,10 +10,11 @@ import java.util.TreeSet;
  *
  * @author justinrstallard
  */
+
 public class Wordlist {
     private String filename = ""; 
     
-    private final TreeSet wordlistTS = new TreeSet();
+    public static TreeSet wordlistTS = new TreeSet();
     
     Wordlist(String fn){
         filename = fn; 
