@@ -4,21 +4,24 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
  * @author justinrstallard
  */
-public class ParseHashFile {
+public class HashFile {
     
     String filename = "";
-    ArrayList<User> users = new ArrayList<>();
+    HashMap users = new HashMap(); 
+   // ArrayList<User> users = new ArrayList<>();
     
-    ParseHashFile(String fn){
+    HashFile(String fn){
         filename = fn;
     }
     
-    public void parseHashFile() throws FileNotFoundException{
+    public void parse() throws FileNotFoundException{
         
         Scanner sc = new Scanner(new File(filename)).useDelimiter(":|\\r\n");
         
@@ -26,7 +29,11 @@ public class ParseHashFile {
             String user = sc.next();
             String salt = sc.next();
             String hash = sc.next();
-            users.add(new User(user, hash, salt));    
+            users.put(hash, new User(user, hash, salt));    
         }
+    }
+    
+    public User findHash(String h){
+        return (User)users.get(h);
     }
 }

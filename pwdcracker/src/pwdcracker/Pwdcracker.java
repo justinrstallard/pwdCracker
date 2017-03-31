@@ -15,36 +15,23 @@ public class Pwdcracker {
      * @throws java.security.NoSuchAlgorithmException
      */
     public static void main(String[] args) throws FileNotFoundException, NoSuchAlgorithmException {
-        long startTime = System.nanoTime();
-        
         //Parse given hash file
-        ParseHashFile pHS = new ParseHashFile("pa3hashes.txt");        
-        pHS.parseHashFile();
+        HashFile hashFile = new HashFile("pa3hashes.txt");        
+        hashFile.parse();
         
         //Parse bible
-        Wordlist pB = new Wordlist("Bible.txt");
-        pB.parseWordlist();
+        Wordlist wl = new Wordlist("Bible.txt");
+        wl.parseWordlist();
         
-        //add salt to passwords
-        for (int i = 0; i < pHS.users.size(); i++) {
-            if(pHS.users.get(i).getSalt(pHS.users.get(i)).length() >= 1){
-                pB.addSaltToWordlist(pHS.users.get(i).getSalt(pHS.users.get(i)));
-            }
-        }
-           
-        pB.hashWordlist();   
-        //Compare hashfile with hashed bible and output
-        for (int j = 0; j < pHS.users.size(); j++) {
-            if(pB.wordlistHM.containsKey(pHS.users.get(j).getHash(pHS.users.get(j)))) {
-                long currTime = System.nanoTime();
-                long elapsed = currTime - startTime;
-                long seconds = elapsed / 1000000000;
-                long ms = (elapsed-seconds*1000000000)/1000000;
-                System.out.print(pHS.users.get(j).getUserName(pHS.users.get(j)) + " \t");
-                System.out.print(pB.wordlistHM.get(pHS.users.get(j).getHash(pHS.users.get(j))) + " \t");
-                System.out.println(seconds + "s "+ ms + "ms ");
-            }
-        }
+        // start Thread
+        PwdTesterThread testerThread = new PwdTesterThread("Tester1", hashFile); 
+        testerThread.start(); 
+        testerThread.run();
+        
+        // start guessing passwords 
+        PwdChanger changer = new PwdChanger(); 
+        changer.runTests();
+        
+        // and the program will never end. probably. 
     }
-    
 }
