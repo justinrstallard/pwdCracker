@@ -49,7 +49,7 @@ public class PwdChanger {
                     PwdTesterThread.pwds.add(s + users.get(i).getSalt()); 
                 }
             }
-        }        
+        }
     }
     
     private Iterator getIterator(){

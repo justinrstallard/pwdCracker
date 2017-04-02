@@ -26,7 +26,7 @@ public class Pwdcracker {
         Wordlist wl = new Wordlist("Bible.txt");
         wl.parseWordlist();
         
-        // start Thread
+        // start Threads
         PwdTesterThread testerThread = new PwdTesterThread("Tester1", hashFile); 
         testerThread.start(); 
         
@@ -35,6 +35,27 @@ public class Pwdcracker {
         
         PwdTesterThread testerThread3 = new PwdTesterThread("Tester3", hashFile); 
         testerThread3.start(); 
+        
+        PwdTesterThread testerThread4 = new PwdTesterThread("Tester4", hashFile); 
+        testerThread4.start(); 
+        
+        PwdTesterThread testerThread5 = new PwdTesterThread("Tester5", hashFile); 
+        testerThread5.start(); 
+        
+        PwdTesterThread testerThread6 = new PwdTesterThread("Tester6", hashFile); 
+        testerThread6.start(); 
+        
+        PwdTesterThread testerThread7 = new PwdTesterThread("Tester7", hashFile); 
+        testerThread7.start(); 
+        
+        PwdTesterThread testerThread8 = new PwdTesterThread("Tester8", hashFile); 
+        testerThread8.start(); 
+        
+        PwdTesterThread testerThread9 = new PwdTesterThread("Tester9", hashFile); 
+        testerThread9.start(); 
+        
+        PwdTesterThread testerThread10 = new PwdTesterThread("Tester10", hashFile); 
+        testerThread10.start(); 
         
         // start guessing passwords 
         PwdChanger changer = new PwdChanger(); 
