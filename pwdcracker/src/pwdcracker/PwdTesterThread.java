@@ -21,7 +21,7 @@ public class PwdTesterThread implements Runnable {
     private HashFile hashFile; 
     
     public static Queue<String> pwds = new ArrayDeque<String>();
-    
+    public static Object lock1 = new Object();
     PwdTesterThread(String name, HashFile hf){
         threadName = name; 
         hashFile = hf; 
@@ -43,8 +43,10 @@ public class PwdTesterThread implements Runnable {
             // index++; 
             if(!pwds.isEmpty()){
                 // pop 
-                password = pwds.remove(); 
                 
+                synchronized(lock1){
+                    password = pwds.remove(); 
+                }
                 // hash pwd
                 try {
                     hash = hMachine.hash(password.getBytes());

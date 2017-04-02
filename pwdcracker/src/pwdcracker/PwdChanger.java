@@ -7,6 +7,8 @@ package pwdcracker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import static pwdcracker.PwdTesterThread.lock1;
+import static pwdcracker.PwdTesterThread.pwds;
 
 /**
  *
@@ -26,23 +28,26 @@ public class PwdChanger {
     
     public void runTests(){
         toLowerCase();
-        toUpperCase();
-        replaceChar();        
+        toUpperCase();       
         appendPrependZeroToNine(); 
         appendPrependZeroToNineLowerAndUpperCase();
-        appendPunctuation();
+        crazyTests();
         //System.out.println("End of Tests.");
     }
     
     private void add(String s){
-        PwdTesterThread.pwds.add(s); 
+        synchronized(lock1){
+            PwdTesterThread.pwds.add(s);             
+        }   
         addWSalt(s);
     }
     
     private void addWSalt(String s){
         for (int i = 0; i < users.size(); i++) {
             if(!users.get(i).getSalt().equals("")){
-                PwdTesterThread.pwds.add(s + users.get(i).getSalt()); 
+                synchronized(lock1){
+                    PwdTesterThread.pwds.add(s + users.get(i).getSalt()); 
+                }
             }
         }        
     }
@@ -69,81 +74,68 @@ public class PwdChanger {
         }
     }
     
-    private void replaceChar(){
-        Iterator it = getIterator();
-        
-        while(it.hasNext()){
-            String s = (String)it.next();
-            add(s.replace('a', '@')); 
-            add(s.replace('a', '4')); 
-            add(s.replace('s', '$')); 
-            add(s.replace('l', '!')); 
-        }
-    }
-    
-    private void appendPunctuation(){
-        String ints = "!?.@#$^&*()<>;:";
-        
-        for(int i = 0; i<ints.length(); i++){
-            append(ints.substring(i, i+1), ""); 
-            prepend(ints.substring(i,i+1)); 
-        }
-    }
-    
     private void crazyTests(){
         Iterator it = getIterator(); 
         
         while(it.hasNext()){
             int tests = 0;
-
-            for(int i = 0; i<3; i++) {
-                String s = Integer.toBinaryString(i);
-                if(s.charAt(0)=='1'){
+            String pwdString = (String)it.next();
+            for(long i = 0; i<4096; i++) {
+                String pwdStringTemp = pwdString;
+                String s = String.format("%32s", Long.toBinaryString(i));
+                if(s.charAt(31)=='1'){
+                    pwdStringTemp = pwdStringTemp.replace('a', '@');                    
+                }
+                if(s.charAt(30)=='1'){
+                    pwdStringTemp = pwdStringTemp.replace('s', '$');
+                }
+                if(s.charAt(29)=='1'){
+                    pwdStringTemp = pwdStringTemp.replace('o', '0');
+                }
+                if(s.charAt(28)=='1'){
+                    pwdStringTemp = pwdStringTemp.replace('e', '3');
+                }
+                if(s.charAt(27)=='1'){
+                    pwdStringTemp = pwdStringTemp.replace('l', '!');
+                }
+                if(s.charAt(26)=='1'){
+                    pwdStringTemp = pwdStringTemp.replace('s', '5');
+                }
+                if(s.charAt(25)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "!");
+                }
+                if(s.charAt(24)=='1'){
                     
                 }
-                if(s.charAt(1)=='1'){
+                if(s.charAt(23)=='1'){
                     
                 }
-                if(s.charAt(2)=='1'){
+                if(s.charAt(22)=='1'){
                     
                 }
-                if(s.charAt(3)=='1'){
+                if(s.charAt(21)=='1'){
                     
                 }
-                if(s.charAt(4)=='1'){
+                if(s.charAt(20)=='1'){
                     
                 }
-                if(s.charAt(5)=='1'){
-                    
-                }
-                if(s.charAt(6)=='1'){
-                    
-                }
-                if(s.charAt(7)=='1'){
-                    
-                }
-                if(s.charAt(8)=='1'){
-                    
-                }
-                if(s.charAt(8)=='1'){
-                    
-                }
-                if(s.charAt(10)=='1'){
-                    
-                }
-                if(s.charAt(11)=='1'){
-                    
-                }
+                add(pwdStringTemp);
+            }
         }
-        }
+        System.out.println("done with crazy tests");
     }
     
     private void appendPrependZeroToNine(){
         String ints = "1234567890";
         
         for(int i = 1; i<ints.length(); i++){
-            append(ints.substring(0, i), ""); 
-            prepend(ints.substring(0,i)); 
+            Iterator it = getIterator();
+            
+            while(it.hasNext()){
+                String s = (String)it.next();
+                add(s + ints.substring(0,i));
+                add(ints.substring(0,i) + s);
+            }
         }
     }
     
@@ -165,19 +157,11 @@ public class PwdChanger {
         }
     }
 
-    private void append(String ap1, String ap2){
-        Iterator it = getIterator(); 
-        
-        while(it.hasNext()){
-            add((String)it.next() + ap1 + ap2); 
-        }
+    private String append(String pwd, String ap){
+        return pwd + ap;
     }
     
-    private void prepend(String pre){
-        Iterator it = getIterator(); 
-        
-        while(it.hasNext()){
-            add(pre + (String)it.next());
-        }
+    private String prepend(String pre,String pwd){        
+        return pre + pwd;
     }
 }
