@@ -91,7 +91,51 @@ public class PwdChanger {
     }
     
     private void crazyTests(){
+        Iterator it = getIterator(); 
         
+        while(it.hasNext()){
+            int tests = 0;
+
+            for(int i = 0; i<3; i++) {
+                String s = Integer.toBinaryString(i);
+                if(s.charAt(0)=='1'){
+                    
+                }
+                if(s.charAt(1)=='1'){
+                    
+                }
+                if(s.charAt(2)=='1'){
+                    
+                }
+                if(s.charAt(3)=='1'){
+                    
+                }
+                if(s.charAt(4)=='1'){
+                    
+                }
+                if(s.charAt(5)=='1'){
+                    
+                }
+                if(s.charAt(6)=='1'){
+                    
+                }
+                if(s.charAt(7)=='1'){
+                    
+                }
+                if(s.charAt(8)=='1'){
+                    
+                }
+                if(s.charAt(8)=='1'){
+                    
+                }
+                if(s.charAt(10)=='1'){
+                    
+                }
+                if(s.charAt(11)=='1'){
+                    
+                }
+        }
+        }
     }
     
     private void appendPrependZeroToNine(){
