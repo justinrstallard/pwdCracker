@@ -5,6 +5,7 @@
  */
 package pwdcracker;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -12,26 +13,38 @@ import java.util.Iterator;
  * @author jlarson
  */
 public class PwdChanger {
-    
+    ArrayList <User> users= new ArrayList();
     
     PwdChanger(){
         Iterator i = Wordlist.wordlistTS.iterator();
+        users = HashFile.getUsers();
         while(i.hasNext()){
-            add((String)i.next()); 
+            String s = (String) i.next();
+            add(s);
         }
     }
     
     public void runTests(){
         toLowerCase();
         toUpperCase();
+        replaceChar();        
         appendPrependZeroToNine(); 
         appendPrependZeroToNineLowerAndUpperCase();
-        
-        System.out.println("End of Tests.");
+        appendPunctuation();
+        //System.out.println("End of Tests.");
     }
     
     private void add(String s){
         PwdTesterThread.pwds.add(s); 
+        addWSalt(s);
+    }
+    
+    private void addWSalt(String s){
+        for (int i = 0; i < users.size(); i++) {
+            if(!users.get(i).getSalt().equals("")){
+                PwdTesterThread.pwds.add(s + users.get(i).getSalt()); 
+            }
+        }        
     }
     
     private Iterator getIterator(){
@@ -56,10 +69,35 @@ public class PwdChanger {
         }
     }
     
+    private void replaceChar(){
+        Iterator it = getIterator();
+        
+        while(it.hasNext()){
+            String s = (String)it.next();
+            add(s.replace('a', '@')); 
+            add(s.replace('a', '4')); 
+            add(s.replace('s', '$')); 
+            add(s.replace('l', '!')); 
+        }
+    }
+    
+    private void appendPunctuation(){
+        String ints = "!?.@#$^&*()<>;:";
+        
+        for(int i = 0; i<ints.length(); i++){
+            append(ints.substring(i, i+1), ""); 
+            prepend(ints.substring(i,i+1)); 
+        }
+    }
+    
+    private void crazyTests(){
+        
+    }
+    
     private void appendPrependZeroToNine(){
         String ints = "1234567890";
         
-        for(int i = 0; i<ints.length(); i++){
+        for(int i = 1; i<ints.length(); i++){
             append(ints.substring(0, i), ""); 
             prepend(ints.substring(0,i)); 
         }
@@ -68,7 +106,7 @@ public class PwdChanger {
     private void appendPrependZeroToNineLowerAndUpperCase(){
         String ints = "1234567890";
         
-        for(int i = 0; i<ints.length(); i++){
+        for(int i = 1; i<ints.length(); i++){
             Iterator it = getIterator(); 
             String str = "";  
             String pend = ints.substring(0, i); 

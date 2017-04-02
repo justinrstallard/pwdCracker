@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -15,7 +16,7 @@ public class HashFile {
     
     String filename = "";
     HashMap users = new HashMap(); 
-   // ArrayList<User> users = new ArrayList<>();
+    static ArrayList<User> usersAR = new ArrayList<>();
     
     HashFile(String fn){
         filename = fn;
@@ -29,11 +30,16 @@ public class HashFile {
             String user = sc.next();
             String salt = sc.next();
             String hash = sc.next();
-            users.put(hash, new User(user, hash, salt));    
+            users.put(hash, new User(user, hash, salt)); 
+            usersAR.add(new User(user,hash,salt));
         }
     }
     
     public User findHash(String h){
         return (User)users.get(h);
+    }
+    
+    public static ArrayList getUsers(){
+        return usersAR;
     }
 }

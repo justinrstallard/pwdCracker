@@ -16,6 +16,7 @@ public class User {
     private final String hash;
     private final String salt;
     private String password;
+    public static int count = 0;
     
     // stores all found Users:  (userName, User Object)
     private static HashMap found = new HashMap(); 
@@ -26,14 +27,14 @@ public class User {
         salt = s;
     }
     
-    public String getSalt(User u){
-        return u.salt;
+    public String getSalt(){
+        return salt;
     }
-    public String getUserName(User u){
-        return u.userName;
+    public String getUserName(){
+        return userName;
     }
-    public String getHash(User u){
-        return u.hash;
+    public String getHash(){
+        return hash;
     }
     
     public void print(long startTime, String pwd){
@@ -50,10 +51,9 @@ public class User {
             long elapsed = currTime - startTime;
             long seconds = elapsed / 1000000000;
             long ms = (elapsed-seconds*1000000000)/1000000;
-            System.out.print(userName + " \t");
+            System.out.print(++count + "\t" + userName + " \t");
             System.out.print(pwd + " \t");
             System.out.println(seconds + "s "+ ms + "ms ");
-            
         }
     }
 }
