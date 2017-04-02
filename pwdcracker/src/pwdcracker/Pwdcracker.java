@@ -30,8 +30,11 @@ public class Pwdcracker {
         PwdTesterThread testerThread = new PwdTesterThread("Tester1", hashFile); 
         testerThread.start(); 
         
-        //PwdTesterThread testerThread2 = new PwdTesterThread("Tester2", hashFile); 
-        //testerThread2.start(); 
+        PwdTesterThread testerThread2 = new PwdTesterThread("Tester2", hashFile); 
+        testerThread2.start(); 
+        
+        PwdTesterThread testerThread3 = new PwdTesterThread("Tester3", hashFile); 
+        testerThread3.start(); 
         
         // start guessing passwords 
         PwdChanger changer = new PwdChanger(); 

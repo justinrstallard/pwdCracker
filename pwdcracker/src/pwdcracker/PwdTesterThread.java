@@ -38,7 +38,13 @@ public class PwdTesterThread implements Runnable {
         boolean statusPrinted = false; 
         
         User testUsr = new User("", "", ""); 
-
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PwdTesterThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         while(true){
             // index++; 
             if(!pwds.isEmpty()){

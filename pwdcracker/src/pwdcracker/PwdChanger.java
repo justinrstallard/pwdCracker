@@ -78,13 +78,13 @@ public class PwdChanger {
         Iterator it = getIterator(); 
         
         while(it.hasNext()){
-            int tests = 0;
+            
             String pwdString = (String)it.next();
             for(long i = 0; i<4096; i++) {
                 String pwdStringTemp = pwdString;
                 String s = String.format("%32s", Long.toBinaryString(i));
                 if(s.charAt(31)=='1'){
-                    pwdStringTemp = pwdStringTemp.replace('a', '@');                    
+                    pwdStringTemp = pwdStringTemp.replace('a', '@'); 
                 }
                 if(s.charAt(30)=='1'){
                     pwdStringTemp = pwdStringTemp.replace('s', '$');
@@ -105,16 +105,16 @@ public class PwdChanger {
                     pwdStringTemp = append(pwdStringTemp, "!");
                 }
                 if(s.charAt(24)=='1'){
-                    
+                    pwdStringTemp = append(pwdStringTemp, "1"); 
                 }
                 if(s.charAt(23)=='1'){
-                    
+                    pwdStringTemp = append(pwdStringTemp, "2"); 
                 }
                 if(s.charAt(22)=='1'){
-                    
+                    pwdStringTemp = append(pwdStringTemp, "3"); 
                 }
                 if(s.charAt(21)=='1'){
-                    
+                    pwdStringTemp = append(pwdStringTemp, "4"); 
                 }
                 if(s.charAt(20)=='1'){
                     
