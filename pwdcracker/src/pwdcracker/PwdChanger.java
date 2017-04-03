@@ -7,6 +7,8 @@ package pwdcracker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static pwdcracker.PwdTesterThread.lock1;
 import static pwdcracker.PwdTesterThread.pwds;
 
@@ -31,11 +33,18 @@ public class PwdChanger {
         toUpperCase();       
         appendPrependZeroToNine(); 
         appendPrependZeroToNineLowerAndUpperCase();
-        crazyTests();
-        //System.out.println("End of Tests.");
+        try {
+            crazyTests();
+            //System.out.println("End of Tests.");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PwdChanger.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void add(String s){
+        //while(pwds.size()>1000000){
+            //System.out.println("Blocked add"); 
+        //}
         synchronized(lock1){
             PwdTesterThread.pwds.add(s);             
         }   
@@ -45,6 +54,9 @@ public class PwdChanger {
     private void addWSalt(String s){
         for (int i = 0; i < users.size(); i++) {
             if(!users.get(i).getSalt().equals("")){
+                //while(pwds.size()>1000000){
+                    //System.out.println("Blocked addWSalt"); 
+                //}
                 synchronized(lock1){
                     PwdTesterThread.pwds.add(s + users.get(i).getSalt()); 
                 }
@@ -74,13 +86,15 @@ public class PwdChanger {
         }
     }
     
-    private void crazyTests(){
+    private void crazyTests() throws InterruptedException{
         Iterator it = getIterator(); 
         
         while(it.hasNext()){
             
             String pwdString = (String)it.next();
-            for(long i = 0; i<4096; i++) {
+            for(long i = 0; i<1048576; i++) {
+                
+                
                 String pwdStringTemp = pwdString;
                 String s = String.format("%32s", Long.toBinaryString(i));
                 if(s.charAt(31)=='1'){
@@ -117,8 +131,33 @@ public class PwdChanger {
                     pwdStringTemp = append(pwdStringTemp, "4"); 
                 }
                 if(s.charAt(20)=='1'){
-                    
+                    pwdStringTemp = append(pwdStringTemp, "5"); 
                 }
+                if(s.charAt(19)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "6"); 
+                }
+                if(s.charAt(18)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "7"); 
+                }
+                if(s.charAt(17)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "8"); 
+                }
+                if(s.charAt(16)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "9"); 
+                }
+                if(s.charAt(15)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "0"); 
+                }
+                if(s.charAt(14)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "#"); 
+                }
+                if(s.charAt(13)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "?"); 
+                }
+                if(s.charAt(12)=='1'){
+                    pwdStringTemp = append(pwdStringTemp, "?"); 
+                }
+                
                 add(pwdStringTemp);
             }
         }

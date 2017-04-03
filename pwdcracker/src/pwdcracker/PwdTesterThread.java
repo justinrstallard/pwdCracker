@@ -7,6 +7,7 @@ package pwdcracker;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayDeque;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class PwdTesterThread implements Runnable {
     PwdTesterThread(String name, HashFile hf){
         threadName = name; 
         hashFile = hf; 
-        System.out.println("Created");
+        System.out.println(threadName + ": Created");
     }
     
     @Override
@@ -46,38 +47,36 @@ public class PwdTesterThread implements Runnable {
         }
         
         while(true){
-            // index++; 
-            if(!pwds.isEmpty()){
-                // pop 
-                
-                synchronized(lock1){
-                    password = pwds.remove(); 
-                }
-                // hash pwd
+            // pop 
+
+            synchronized(lock1){
                 try {
-                    hash = hMachine.hash(password.getBytes());
-                } catch (NoSuchAlgorithmException ex) {
-                    System.out.println("MD5 Hasher: NoSuchAlgorithException thrown.");
+                    if(!pwds.isEmpty()){
+                        password = pwds.remove(); 
+                    }
+                    else{
+                        //System.out.println(this.threadName + ": Queue Empty."); 
+                    }
                 }
-
-                // test pwd
-                testUsr = hashFile.findHash(hash); 
-
-                // if passed, print User 
-                if(testUsr!=null){
-                    testUsr.print(startTime, password); 
-                    statusPrinted = false; 
+                catch(NoSuchElementException e1){
+                    //System.out.println("NoSuchElement Exception thrown.");
                 }
             }
-            else{
-                if(!statusPrinted){
-                    System.out.println("Queue Empty."); 
-                    statusPrinted = true; 
-                }
+            // hash pwd
+            try {
+                hash = hMachine.hash(password.getBytes());
+            } catch (NoSuchAlgorithmException ex) {
+                System.out.println("MD5 Hasher: NoSuchAlgorithException thrown.");
             }
-            /*if(index%1000==0){
-                System.out.println(index); 
-            }*/
+
+            // test pwd
+            testUsr = hashFile.findHash(hash); 
+
+            // if passed, print User 
+            if(testUsr!=null){
+                testUsr.print(startTime, password); 
+                statusPrinted = false; 
+            }
         }
     }
     
